@@ -40,9 +40,17 @@ const ProdutoController = {
         return res.status(400).json({mensagem: 'informe valores validos'});
     }
 
-    
-        }catch{ 
+       const id = await ProdutoModel.criar({
+        nome: String(nome).trim(),
+        descricao: descricao ? String(descricao).trim() : null,
+        preco: precoNumero
+       });
 
+       return res.status(201).json({mensagem: 'Produto cadastro com sucesso', id})
+
+        }catch(erro) { 
+            console.error('Erro ao cadastrar produto', erro);
+            return res.status(500).json({mensagem: 'Erro ao cadastrar produto.'})
         }
-    }
+    },
 }
