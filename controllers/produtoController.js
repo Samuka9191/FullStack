@@ -15,10 +15,34 @@ const ProdutoController = {
         try{
             const id = Number(req.params.id);
             if(!Number.isInteger(id) || id <= 0) {
-                return res.status(400).json ({mensagem:'id invalido'})
+                return res.status(400).json ({mensagem: 'id invalido'})
             }
-        } catch {
-            
+
+            const produto = await ProdutoModel.buscarPorID(id);
+            if(!produto) {
+                return res.status(404).json({mensagem: 'produto não encontrado'});
+            }
+
+            return res.status(200).json(produto)
+                } catch(erro) {
+                    console.error('Erro ao buscar produto:', erro);
+                    return res.status(500).json({mensagem: 'Erro ao consultar produto'})          
         }
     },
+
+    async criar(req, res){
+        try{
+        const { nome, descricao, preco } = req.body;
+        const precoNumero = Number(preco);
+
+        if(!nome || !String(nome).trim() || preco === undefined || 
+    preco === '' || !Number.isFinite(precoNumero) || precoNumero < 0) {
+        return res.status(400).json({mensagem: 'informe valores validos'});
+    }
+
+    
+        }catch{ 
+
+        }
+    }
 }
