@@ -2,18 +2,14 @@ const express = require("express");
 
 const routes = express.Router();
 
+const ProdutoController  = require("../controllers/produtoController.js");
+const ProdutoModel = require("../models/produtoModel.js")
 
-const { 
-    cadastrar, 
-    listar, 
-    buscar, 
-    excluir  
-} = require("../controllers/produtoController.js");
-
-routes.post("/cadastrar", cadastrar);
-routes.get("/listar", listar);
-routes.get("/buscar/:id", buscar);
-routes.delete("/excluir/:id", excluir);
+routes.get('/', ProdutoController.listar);
+routes.get('/', ProdutoController.buscarPorId);
+routes.post('/', ProdutoController.criar);
+routes.put('/', ProdutoModel.atualizar);
+routes.delete('/', ProdutoModel.excluir);
 
 
 module.exports = routes;
