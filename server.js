@@ -14,11 +14,11 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
-app.use('/api/produtos', produtoRoutes);
+app.use('/api/produtos', produtosRoutes);
 
 app.get('/api/produtoRoutes')
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Servidor rodandod em http://localhost:${PORT}`);
