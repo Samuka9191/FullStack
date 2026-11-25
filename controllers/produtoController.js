@@ -91,7 +91,24 @@ const ProdutoController = {
     },
 
     async excluir (req, res){
-        
+        try{
+            const id = Number(req.params.id);
+
+            if(!Number.isInteger(id) || id <= 0){
+                return res.status(400).json({mensagem: 'ID Invalido'})
+            }
+
+            const quantidadeExcluida = await ProdutoModel.excluir(id);
+
+            if(quantidadeExcluida === 0) {
+                return res.status(400).json({mensagem: 'produto nao encontrado'})
+            }
+
+            return res.status(200).json({mensagem: 'Produto excluido com sucesso!'})
+        } catch (erro){
+            console.error('Erro ao excluir produto', erro)
+            return res.status(500).json({mensagem: 'Erro ao excluir produto'})
+        }
     }
 }
 
