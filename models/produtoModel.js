@@ -37,7 +37,7 @@ const ProdutoModel = {
 
     async excluir(id) {
         const [resultado] = await db.query (
-            'DELETE FROM produtos'
+            'DELETE FROM produtos WHERE id = ?',
             [id]
         );
         return resultado.affectedRows

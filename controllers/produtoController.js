@@ -65,11 +65,11 @@ const ProdutoController = {
         }
 
         if(!nome || !String(nome).trim() || preco == undefined ||
-         preco == '' || Number.isFinite(precoNumero) || precoNumero < 0){
+         preco == '' || !Number.isFinite(precoNumero) || precoNumero < 0){
             return res.status(400).json({mensagem: 'Nome e/ou preco invalido'})
          }
 
-         const produtoExiste = await ProdutoModel.buscarPorId(id);
+         const produtoExiste = await ProdutoModel.buscarPorID(id);
 
          if(!produtoExiste) {
             return res.status(400).json({mensagem: 'Produto não encontrado'})
