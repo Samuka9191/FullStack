@@ -53,6 +53,46 @@ const ProdutoController = {
             return res.status(500).json({mensagem: 'Erro ao cadastrar produto.'})
         }
     },
+
+    async atualizar(req, res){
+        try{ 
+        const id = Number(req.params.id);
+        const { nome, descricao, preco } = req.body;
+        const precoNumero = Number(preco)
+
+        if(!Number.isInteger(id) || id <=0){
+            return res.status(400).json({mensagem: 'ID Invalido'})
+        }
+
+        if(!nome || !String(nome).trim() || preco == undefined ||
+         preco == '' || Number.isFinite(precoNumero) || precoNumero < 0){
+            return res.status(400).json({mensagem: 'Nome e/ou preco invalido'})
+         }
+
+         const produtoExiste = await ProdutoModel.buscarPorId(id);
+
+         if(!produtoExiste) {
+            return res.status(400).json({mensagem: 'Produto não encontrado'})
+
+         }
+
+         await ProdutoModel.atualizar(id, {
+            nome: String(nome).trim(),
+            descricao: descricao ? String(descricao).trim() : null,
+            preco: precoNumero
+         });
+
+         return res.status(200).json({mensagem: 'Produto atualizado com sucesso'})
+
+         }catch(erro){
+            console.error('Erro ao atualizar produto', erro)
+            return res.status(500).json({ mensagem: 'Erro ao atualizar produto'})
+         }
+    },
+
+    async excluir (req, res){
+        
+    }
 }
 
 module.exports = ProdutoController
